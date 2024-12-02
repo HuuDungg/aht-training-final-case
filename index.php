@@ -7,27 +7,38 @@ include("./controller/TaskController.php");
 include("./controller/UserController.php");
 
 
-$blogController = new BlogController();
+$userController = new UserController();
+$taskController = new TaskController();
 $act = $_GET["act"] ?? "/";
 
 switch ($act) {
     case "/":
-        include("./view/product/list.php");
+        $userController->loginForm();
+        break;
+    case "processLogin":
+        $userController->login();
+        break;
+    case "logout":
+        $userController->logout();
         break;
     case "list":
-        $blogController->display();
+        $taskController->display();
         break;
-    case "add":
-        $blogController->create();
+    // case for api
+    case "getAll":
+        $taskController->getAll();
         break;
     case "delete":
-        $blogController->delete();
+        $taskController->delete();
         break;
-    case "edit":
-        $blogController->getById();
+    case "create":
+        $taskController->create();
         break;
-    case "save":
-        $blogController->update();
+    case "detail":
+        $taskController->getById();
+        break;
+    case "update":
+        $taskController->update();
         break;
     default:
         echo "404 - Page not found";

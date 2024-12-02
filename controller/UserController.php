@@ -24,15 +24,20 @@ class UserController
     public function login(){
         $username = $_POST["username"];
         $password = $_POST["password"];
-        $this->userModel->login($username, $password);
-    }
-
-    public function isLogin(){
-        return $this->userModel->isLoggedIn();
+        $result = $this->userModel->login($username, $password);
+        if($result){
+            header("Location: http://localhost/aht-training/final-case/?act=list");
+        }else{
+            header("Location: http://localhost/aht-training/final-case/");
+        }
     }
 
     public function logout(){
         $this->userModel->logout();
+    }
+
+    public function loginForm(){
+        require("./view/user/login.php");
     }
 
 

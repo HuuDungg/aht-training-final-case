@@ -15,24 +15,18 @@ class User {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-
             return true; 
         } else {
             return false; 
         }
     }
 
-    public function isLoggedIn() {
-        session_start();
-        return isset($_SESSION['user_id']);
-    }
 
     public function logout() {
-        session_start();
         session_unset();
         session_destroy();
+        header("Location: http://localhost/aht-training/final-case/");
     }
 }

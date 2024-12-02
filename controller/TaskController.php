@@ -26,6 +26,10 @@ class TaskController
         }
     }
 
+    public function display(){
+        require("./view/task/list.php");
+    }
+
     public function getAll(){
         $tasks = $this->taskModel->getAll();
         echo json_encode($tasks );
@@ -34,7 +38,7 @@ class TaskController
     public function create(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $title = $_POST['title'];
-            $status = $_POST['status'];
+            $status = 0;
             $content = $_POST['content'];
             $priority = $_POST['priority'];
             $this->taskModel->create($title,  $status, $content, $priority);
@@ -46,19 +50,22 @@ class TaskController
         $this->taskModel->delete($id);
     }
 
-    public function getById(){
+    public function getById() {
         $id = $_GET['id'];
         $task = $this->taskModel->getById($id);
-        echo json_decode($task);
+        echo json_encode($task);
     }
 
-    public function update(){
-        $id = $_POST['id'];
-        $title = $_POST['title'];
-        $status = $_POST['status'];
-        $content = $_POST['content'];
-        $priority = $_POST['priority'];
-        $this->taskModel->$this->taskModel->create($id, $title,  $status, $content, $priority);
-    }
+    public function update() {
+    $id = $_POST['id'];
+    $title = $_POST['title'];
+    $status = $_POST['status'];
+    $content = $_POST['content'];
+    $priority = $_POST['priority'];
+
+    $this->taskModel->update($id, $title, $status, $content, $priority);
+    
+    echo json_encode(['message' => 'Task updated successfully!']);
+}
 }
 ?>
